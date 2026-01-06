@@ -79,7 +79,7 @@ export default function Navbar() {
             {menuItems.map((item) => (
               <div
                 key={item.label}
-                className="relative"
+                className="relative pb-2"
                 onMouseEnter={() => !isMobileMenuOpen && setOpenDropdown(item.label)}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
@@ -93,8 +93,9 @@ export default function Navbar() {
                 </div>
                 {item.dropdown && openDropdown === item.label && !isMobileMenuOpen && (
                   <div
-                    className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50 opacity-100 visible translate-y-0 transition-all duration-200"
+                    className="absolute top-full left-0 w-64 z-50 -mt-2 pt-2"
                   >
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg py-2 opacity-100 visible translate-y-0 transition-all duration-200">
                     {item.dropdown.map((subItem) => (
                       <Link
                         key={subItem}
@@ -104,6 +105,7 @@ export default function Navbar() {
                         {subItem}
                       </Link>
                     ))}
+                    </div>
                   </div>
                 )}
               </div>
