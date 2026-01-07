@@ -1,4 +1,4 @@
-import products from "./products.json";
+// import products from "./products.json"; // Reserved for future use
 
 export interface Product {
   id: string;
@@ -179,5 +179,9 @@ export const sampleProducts: Product[] = [
     weeklyRate: 180,
   },
 ];
+
+export function getProductById(id: string): Product | undefined {
+  return sampleProducts.find((product) => product.id === id);
+}
 
 

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Product } from "@/data/rentalInventory";
 
 interface ProductCardProps {
@@ -11,7 +12,8 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <div className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-teal transition-all duration-200">
+    <Link href={`/rental-inventory/${product.id}`}>
+      <div className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-teal transition-all duration-200 cursor-pointer">
       {/* Image Placeholder */}
       <div className="aspect-video bg-gray-100 flex items-center justify-center">
         <span className="text-gray-400 text-sm">Product Image</span>
@@ -40,6 +42,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
     </div>
+    </Link>
   );
 }
 
