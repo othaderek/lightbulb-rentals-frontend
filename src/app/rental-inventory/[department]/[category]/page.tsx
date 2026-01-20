@@ -1,7 +1,7 @@
 "use client";
 
 import { use, useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -21,6 +21,8 @@ interface CategoryPageProps {
 export default function CategoryPage({ params }: CategoryPageProps) {
   const { department: departmentSlug, category: categorySlug } = use(params);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("q") || "";
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState<ProductListItem[]>([]);
@@ -49,6 +51,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             departmentSlug,
             categorySlug,
             subcategorySlug: selectedSubcategory || undefined,
+            search: searchQuery || undefined,
             page: currentPage,
             pageSize: 12,
           }),
@@ -73,7 +76,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     };
 
     loadData();
-  }, [departmentSlug, categorySlug, selectedSubcategory, currentPage, department, router]);
+  }, [departmentSlug, categorySlug, selectedSubcategory, currentPage, searchQuery, department, router]);
 
   if (!department) {
     return null;
@@ -134,6 +137,20 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             <h1 className="text-3xl md:text-4xl font-bold text-black mb-2">
               {categoryName}
             </h1>
+            
+            {searchQuery && (
+              <div className="mb-4 flex items-center gap-2">
+                <span className="text-gray-700">
+                  Search results for: <span className="font-semibold">"{searchQuery}"</span>
+                </span>
+                <Link
+                  href={`/rental-inventory/${departmentSlug}/${categorySlug}`}
+                  className="text-teal hover:text-teal-hover text-sm underline"
+                >
+                  Clear search
+                </Link>
+              </div>
+            )}
 
             {/* Subcategory Filter Chips */}
             {subcategories.length > 0 && (

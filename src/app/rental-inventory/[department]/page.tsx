@@ -1,7 +1,7 @@
 "use client";
 
 import { use, useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -20,6 +20,8 @@ interface DepartmentPageProps {
 export default function DepartmentPage({ params }: DepartmentPageProps) {
   const { department: departmentSlug } = use(params);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("q") || "";
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState<"name-asc" | "name-desc">("name-asc");
@@ -45,6 +47,7 @@ export default function DepartmentPage({ params }: DepartmentPageProps) {
           getProducts({
             departmentSlug,
             categorySlug: selectedCategory || undefined,
+            search: searchQuery || undefined,
             page: currentPage,
             pageSize: 12,
             sort: sortOrder,
@@ -62,7 +65,7 @@ export default function DepartmentPage({ params }: DepartmentPageProps) {
     };
 
     loadData();
-  }, [departmentSlug, selectedCategory, currentPage, sortOrder, department, router]);
+  }, [departmentSlug, selectedCategory, currentPage, sortOrder, searchQuery, department, router]);
 
   if (!department) {
     return null;
@@ -117,7 +120,22 @@ export default function DepartmentPage({ params }: DepartmentPageProps) {
             <h1 className="text-3xl md:text-4xl font-bold text-black mb-2">
               {department.name}
             </h1>
-            <p className="text-gray-700 mb-4">{department.description}</p>
+            {searchQuery && (
+              <div className="mb-4 flex items-center gap-2">
+                <span className="text-gray-700">
+                  Search results for: <span className="font-semibold">"{searchQuery}"</span>
+                </span>
+                <Link
+                  href={`/rental-inventory/${departmentSlug}`}
+                  className="text-teal hover:text-teal-hover text-sm underline"
+                >
+                  Clear search
+                </Link>
+              </div>
+            )}
+            {!searchQuery && (
+              <p className="text-gray-700 mb-4">{department.description}</p>
+            )}
 
             {/* Category Filter Chips */}
             {categories.length > 0 && (

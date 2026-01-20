@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import SearchBar from "@/components/search/SearchBar";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -75,7 +76,12 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8 flex-1">
+            {/* Search Bar */}
+            <div className="flex-1 max-w-md mx-4">
+              <SearchBar />
+            </div>
+            
             {menuItems.map((item) => (
               <div
                 key={item.label}
@@ -147,6 +153,11 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <div className="lg:hidden border-t border-gray-200 bg-white relative z-50">
           <div className="px-4 py-4 space-y-4">
+            {/* Mobile Search Bar */}
+            <div className="pb-4 border-b border-gray-200">
+              <SearchBar />
+            </div>
+            
             {menuItems.map((item) => (
               <div key={item.label}>
                 {item.dropdown && item.dropdown.length > 0 ? (
