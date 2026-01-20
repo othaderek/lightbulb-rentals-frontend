@@ -1,0 +1,106 @@
+# Cursor Rules - Lightbulb Rentals Frontend
+
+## Documentation Requirements
+
+**Before starting any work session:**
+1. Read `CLAUDE.md` for the overall plan and current phase
+2. Read `docs/PROGRESS.md` for what's already been completed
+3. Read `docs/DECISIONS.md` for architecture decisions that have been made
+4. Read `docs/BLOCKERS.md` for known issues or things waiting on external input
+
+**After completing work:**
+1. Update `docs/PROGRESS.md` with:
+   - Date
+   - What was accomplished (files created/modified)
+   - What's ready for next session
+   - Any new blockers discovered
+
+2. Update `docs/DECISIONS.md` if any architecture or implementation decisions were made, including:
+   - The decision
+   - Rationale
+   - Date
+   - Alternatives considered (if relevant)
+
+3. Update `docs/BLOCKERS.md` if:
+   - New blockers discovered (waiting on CEO, unclear requirements, etc.)
+   - Existing blockers resolved (mark as resolved with date)
+
+4. Update `CLAUDE.md` checkboxes if tasks were completed
+
+## Documentation Format
+
+### PROGRESS.md Format
+```markdown
+## YYYY-MM-DD
+- Completed: [specific task]
+- Created: `path/to/file.tsx`
+- Modified: `path/to/existing-file.tsx`
+- Next up: [what should happen next session]
+- Blocker: [if any]
+```
+
+### DECISIONS.md Format
+```markdown
+## [Short Decision Title]
+**Decision:** [What was decided]
+**Rationale:** [Why]
+**Alternatives considered:** [Optional - what else was considered]
+**Date:** YYYY-MM-DD
+```
+
+### BLOCKERS.md Format
+```markdown
+## [Blocker Title]
+**Status:** Open | Resolved
+**Waiting on:** [CEO / External / Technical investigation]
+**Description:** [Details]
+**Added:** YYYY-MM-DD
+**Resolved:** YYYY-MM-DD (if resolved)
+```
+
+## Code Style
+
+- Use TypeScript strict mode
+- Use named exports over default exports
+- Colocate components with their pages when page-specific
+- Shared components go in `components/`
+- API functions go in `lib/api/`
+- Static data constants go in `lib/data/`
+- Types go in `types/index.ts`
+
+## Project Context
+
+This is a film equipment rental website for Lightbulb Rentals (NYC, Philadelphia, Pittsburgh).
+
+**Key constraints:**
+- Lead-generation site, not e-commerce (no shopping cart)
+- Quote requests go through existing Gravity Forms on WordPress
+- Stores and studios are hardcoded constants (not from API)
+- Inventory data comes from .NET API (uses mock data until API ready)
+- No chat widgets, no AI mentions, no corporate jargon
+- Mobile-first, fast page loads
+
+**Reference sites for UX:**
+- Lensrentals.com (data density)
+- BHPhoto.com (search, hidden SEO text)
+- McMaster.com (speed)
+
+## When Asked to Implement Features
+
+1. Check if the feature is in `CLAUDE.md` and its current priority
+2. Check `docs/PROGRESS.md` to see if related work was started
+3. Check `docs/DECISIONS.md` for any relevant prior decisions
+4. Check `docs/BLOCKERS.md` to see if there are known blockers
+5. If unclear, ask before implementing
+6. After implementing, update all relevant docs
+
+## Ending a Session
+
+When the user says "let's wrap up", "end session", "summarize", or similar:
+
+1. Provide a brief summary of what was accomplished
+2. Update `docs/PROGRESS.md` with the session's work
+3. Update `docs/DECISIONS.md` if decisions were made
+4. Update `docs/BLOCKERS.md` if blockers were found or resolved
+5. Update `CLAUDE.md` checkboxes for completed tasks
+6. Suggest what to work on next session

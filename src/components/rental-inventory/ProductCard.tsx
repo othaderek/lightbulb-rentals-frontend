@@ -1,22 +1,30 @@
 import Link from "next/link";
-import { Product } from "@/data/rentalInventory";
+import { ProductListItem } from "@/types";
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductListItem;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const formatPrice = (price: number) => {
-    if (price === 0) return "Request a Quote";
+  const formatPrice = (price?: number) => {
+    if (!price || price === 0) return "Request a Quote";
     return `$${price.toFixed(2)}`;
   };
 
   return (
-    <Link href={`/rental-inventory/${product.id}`}>
+    <Link href={`/rental-inventory/${product.departmentSlug}/${product.categorySlug}/${product.slug}`}>
       <div className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-teal transition-all duration-200 cursor-pointer">
       {/* Image Placeholder */}
       <div className="aspect-video bg-gray-100 flex items-center justify-center">
-        <span className="text-gray-400 text-sm">Product Image</span>
+        {product.imageUrl ? (
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <span className="text-gray-400 text-sm">Product Image</span>
+        )}
       </div>
 
       {/* Product Info */}
@@ -31,12 +39,6 @@ export default function ProductCard({ product }: ProductCardProps) {
             <span className="text-sm text-gray-600">Daily</span>
             <span className="font-semibold text-black">
               {formatPrice(product.dailyRate)}
-            </span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">Weekly</span>
-            <span className="font-semibold text-black">
-              {formatPrice(product.weeklyRate)}
             </span>
           </div>
         </div>

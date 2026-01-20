@@ -1,6 +1,6 @@
 import { apiRequest, isApiAvailable } from './client';
 import { Category, Subcategory } from '@/types';
-import { categories } from '@/data/rentalInventory';
+import { getMockCategories, getMockSubcategories } from '@/lib/mock-data/categories';
 
 export async function getCategories(
   departmentSlug: string
@@ -22,28 +22,4 @@ export async function getSubcategories(
   }
 
   return apiRequest<Subcategory[]>(`/api/categories/${categorySlug}/subcategories`);
-}
-
-// Mock data functions
-function getMockCategories(departmentSlug: string): Category[] {
-  const department = categories.find((d) => d.id === departmentSlug);
-  
-  if (!department || !department.subcategories || department.subcategories.length === 0) {
-    return [];
-  }
-
-  // Convert subcategories to categories for mock data
-  return department.subcategories.map((subcat, index) => ({
-    id: index + 1,
-    name: subcat,
-    slug: subcat.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
-    departmentSlug,
-    productCount: 0, // Would need to calculate from actual products
-  }));
-}
-
-function getMockSubcategories(categorySlug: string): Subcategory[] {
-  // For mock data, return empty array
-  // In real implementation, this would come from the API
-  return [];
 }
